@@ -1,0 +1,20 @@
+{
+  "name": "trustguard-ai-test-suites",
+  "version": "1.0.0",
+  "description": "TrustGuard AI — 8 test suites × 450 tests each = 3600 total tests with Excel reports",
+  "scripts": {
+    "test:all": "node runners/run-all.js",
+    "selenium":    "node runners/selenium-web-runner.js",
+    "appium":      "node runners/appium-android-runner.js",
+    "unit":        "node runners/unit-api-runner.js",
+    "validation":  "node runners/validation-runner.js",
+    "deployment":  "node runners/deployment-runner.js",
+    "load":        "node runners/load-performance-runner.js",
+    "vuln":        "node runners/vulnerability-runner.js",
+    "e2e":         "node runners/full-e2e-runner.js",
+    "reports:all": "node reporters/run-all-reports.js"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  }
+}

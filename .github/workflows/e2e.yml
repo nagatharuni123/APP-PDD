@@ -1,0 +1,188 @@
+name: e2e
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  # ──────────────────────────────────────────────────────────────────────────
+  selenium-web-tests:
+    name: "🌐 Selenium Web Tests (450)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Install deps
+        run: cd test-suites && npm install
+      - name: Run Selenium Web Tests (450)
+        run: cd test-suites && node runners/selenium-web-runner.js
+      - name: Generate Selenium Web Excel Report
+        run: cd test-suites && node reporters/selenium-web-report.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: selenium-web-report
+          path: test-suites/reports/selenium-web-report.xlsx
+
+  # ──────────────────────────────────────────────────────────────────────────
+  appium-android-tests:
+    name: "📱 Appium Android Tests (450)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Install deps
+        run: cd test-suites && npm install
+      - name: Run Appium Android Tests (450)
+        run: cd test-suites && node runners/appium-android-runner.js
+      - name: Generate Appium Android Excel Report
+        run: cd test-suites && node reporters/appium-android-report.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: appium-android-report
+          path: test-suites/reports/appium-android-report.xlsx
+
+  # ──────────────────────────────────────────────────────────────────────────
+  unit-api-tests:
+    name: "🔧 Unit API Tests (450)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Install deps
+        run: cd test-suites && npm install
+      - name: Run Unit API Tests (450)
+        run: cd test-suites && node runners/unit-api-runner.js
+      - name: Generate Unit API Excel Report
+        run: cd test-suites && node reporters/unit-api-report.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-report
+          path: test-suites/reports/unit-test-report.xlsx
+
+  # ──────────────────────────────────────────────────────────────────────────
+  validation-tests:
+    name: "✅ Validation Tests (450)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Install deps
+        run: cd test-suites && npm install
+      - name: Run Validation Tests (450)
+        run: cd test-suites && node runners/validation-runner.js
+      - name: Generate Validation Excel Report
+        run: cd test-suites && node reporters/validation-report.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: validation-test-report
+          path: test-suites/reports/validation-test-report.xlsx
+
+  # ──────────────────────────────────────────────────────────────────────────
+  deployment-status-tests:
+    name: "🚀 Deployment Status Tests (450)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Install deps
+        run: cd test-suites && npm install
+      - name: Run Deployment Status Tests (450)
+        run: cd test-suites && node runners/deployment-runner.js
+      - name: Generate Deployment Excel Report
+        run: cd test-suites && node reporters/deployment-report.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deployment-test-report
+          path: test-suites/reports/deployment-test-report.xlsx
+
+  # ──────────────────────────────────────────────────────────────────────────
+  load-performance-tests:
+    name: "⚡ Load Performance Tests (450)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Install deps
+        run: cd test-suites && npm install
+      - name: Run Load Performance Tests (450)
+        run: cd test-suites && node runners/load-performance-runner.js
+      - name: Generate Load Performance Excel Report
+        run: cd test-suites && node reporters/load-performance-report.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: load-test-report
+          path: test-suites/reports/load-test-report.xlsx
+
+  # ──────────────────────────────────────────────────────────────────────────
+  vulnerability-tests:
+    name: "🔒 Vulnerability Tests (450)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Install deps
+        run: cd test-suites && npm install
+      - name: Run Vulnerability Tests (450)
+        run: cd test-suites && node runners/vulnerability-runner.js
+      - name: Generate Vulnerability Excel Report
+        run: cd test-suites && node reporters/vulnerability-report.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vulnerability-test-report
+          path: test-suites/reports/vulnerability-test-report.xlsx
+
+  # ──────────────────────────────────────────────────────────────────────────
+  full-e2e-tests:
+    name: "🔄 Full E2E Tests (450)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Install deps
+        run: cd test-suites && npm install
+      - name: Run Full E2E Tests (450)
+        run: cd test-suites && node runners/full-e2e-runner.js
+      - name: Generate Full E2E Excel Report
+        run: cd test-suites && node reporters/full-e2e-report.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: full-e2e-report
+          path: test-suites/reports/full-e2e-report.xlsx
+
+  # ──────────────────────────────────────────────────────────────────────────
+  compile-master-report:
+    name: "📊 Compile Master Excel Report"
+    runs-on: ubuntu-latest
+    needs:
+      - selenium-web-tests
+      - appium-android-tests
+      - unit-api-tests
+      - validation-tests
+      - deployment-status-tests
+      - load-performance-tests
+      - vulnerability-tests
+      - full-e2e-tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Install deps
+        run: cd test-suites && npm install
+      - name: Download all reports
+        uses: actions/download-artifact@v4
+        with:
+          path: test-suites/reports/downloaded
+      - name: Compile Master Excel Report
+        run: cd test-suites && node reporters/master-report.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: master-report
+          path: test-suites/reports/master-report.xlsx
